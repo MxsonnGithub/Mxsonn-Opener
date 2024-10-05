@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mxsonn Opener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-top: -15px;
+        }
+
+        .input-box {
+            margin: 20px 0;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 10px;
+            width: 300px;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Mxsonn Opener</h1>
+        <p>The Spammer you need</p>
+        
+        <br><br><br>
+
+        <input type="text" class="input-box" id="websiteLink" placeholder="Enter Website Link">
+        <br>
+        <input type="number" class="input-box" id="openCount" placeholder="Number of times">
+        <br>
+        <button onclick="openWebsite()">Submit</button>
+    </div>
+
+    <script>
+        async function openWebsite() {
+            const websiteLink = document.getElementById('websiteLink').value;
+            const openCount = document.getElementById('openCount').value;
+
+            if (!websiteLink || !openCount) {
+                alert('Please provide both a link and a number.');
+                return;
+            }
+
+            for (let i = 0; i < openCount; i++) {
+                window.open(websiteLink);
+            }
+
+            const webhookURL = 'YOUR_DISCORD_WEBHOOK_URL';
+            const message = {
+                content: `Someone opened ${websiteLink} ${openCount} times.`
+            };
+
+            try {
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(message)
+                });
+                console.log('Notification sent to Discord webhook.');
+            } catch (error) {
+                console.error('Failed to send webhook message:', error);
+            }
+        }
+    </script>
+
+</body>
+</html>
