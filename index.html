@@ -44,8 +44,18 @@
             }
 
             const webhookURL = 'https://discord.com/api/webhooks/1302064722920734720/PofcLa6NIzoyw2QlU_tlsFC82QZcUB3nwcFVcPGfv9npWrQ9bc6imNdbt5EoAzdq4HXW';
-            const message = {
-                content: `Someone opened ${websiteLink} ${openCount} times.`
+            const embedMessage = {
+                embeds: [
+                    {
+                        title: "Website Opened",
+                        description: `Someone opened [${websiteLink}](${websiteLink}) **${openCount}** times.`,
+                        color: 0x00ff00, // Green color
+                        footer: {
+                            text: "Mxsonn Opener"
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
             };
 
             try {
@@ -54,11 +64,11 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(message)
+                    body: JSON.stringify(embedMessage)
                 });
-                console.log('Notification sent to Discord webhook.');
+                console.log('Embed notification sent to Discord webhook.');
             } catch (error) {
-                console.error('Failed to send webhook message:', error);
+                console.error('Failed to send webhook embed message:', error);
             }
         }
     </script>
