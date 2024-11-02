@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .hidden { display: none; }
+        .spam-list, .announcement-section { margin: 20px; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <!-- Password Input Section -->
+    <div id="password-section">
+        <h2>Admin Access</h2>
+        <input type="password" id="admin-password" placeholder="Enter password" />
+        <button onclick="checkPassword()">Login</button>
+    </div>
+
+    <!-- Admin Panel Content -->
+    <div id="admin-panel" class="hidden">
+        <h2>Admin Panel</h2>
+        
+        <!-- Spam Management Section -->
+        <div class="spam-list">
+            <h3>Current Spams</h3>
+            <ul id="current-spams">
+                <!-- Spam items will be listed here -->
+            </ul>
+            <h3>Past Spams</h3>
+            <ul id="past-spams">
+                <!-- Past spams will be listed here -->
+            </ul>
+        </div>
+
+        <!-- Global Announcement Section -->
+        <div class="announcement-section">
+            <h3>Global Announcement</h3>
+            <textarea id="announcement-input" placeholder="Enter announcement..."></textarea>
+            <button onclick="setAnnouncement()">Set Announcement</button>
+            <p id="announcement-display"></p>
+        </div>
+    </div>
+
+    <script>
+        // Basic password check
+        function checkPassword() {
+            const password = document.getElementById('admin-password').value;
+            if (password === "your_password") {  // Replace with your password
+                document.getElementById('password-section').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        // Sample data for spams
+        const currentSpams = ["Spam #1", "Spam #2"];
+        const pastSpams = ["Old Spam #1", "Old Spam #2"];
+
+        function loadSpams() {
+            const currentSpamList = document.getElementById('current-spams');
+            currentSpams.forEach((spam, index) => {
+                let listItem = document.createElement('li');
+                listItem.innerHTML = `${spam} <button onclick="terminateSpam(${index})">Terminate</button> <button onclick="blockSpam(${index})">Block</button>`;
+                currentSpamList.appendChild(listItem);
+            });
+
+            const pastSpamList = document.getElementById('past-spams');
+            pastSpams.forEach(spam => {
+                let listItem = document.createElement('li');
+                listItem.textContent = spam;
+                pastSpamList.appendChild(listItem);
+            });
+        }
+
+        function terminateSpam(index) {
+            alert(`Terminating spam: ${currentSpams[index]}`);
+            // Logic to terminate spam here
+        }
+
+        function blockSpam(index) {
+            alert(`Blocking spam: ${currentSpams[index]}`);
+            // Logic to block spam here
+        }
+
+        function setAnnouncement() {
+            const announcement = document.getElementById('announcement-input').value;
+            document.getElementById('announcement-display').textContent = `Global Announcement: ${announcement}`;
+            // Logic to set announcement globally here
+        }
+
+        // Load spam data on page load
+        loadSpams();
+    </script>
+</body>
+</html>
